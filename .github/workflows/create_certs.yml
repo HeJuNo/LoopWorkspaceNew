@@ -12,7 +12,7 @@ jobs:
   certificates:
     name: Create Certificates
     needs: validate
-    runs-on: macos-14
+    runs-on: [ self-hosted, macos-14 ]
     steps:
       # Uncomment to manually select latest Xcode if needed
       #- name: Select Latest Xcode
@@ -51,3 +51,7 @@ jobs:
           FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          LANGUAGE: en_US.UTF-8
+
