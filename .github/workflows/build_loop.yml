@@ -27,7 +27,7 @@ jobs:
   # Checks for existence of alive branch; if non-existent creates it
   check_alive_and_permissions:
     needs: validate
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, ubuntu-latest ]
     name: Check alive branch and permissions
     permissions:
       contents: write
@@ -97,7 +97,7 @@ jobs:
   # Performs keepalive to avoid stale fork
   check_latest_from_upstream:
     needs: [validate, check_alive_and_permissions]
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, ubuntu-latest ]
     name: Check upstream and keep alive
     outputs:
       NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
@@ -186,7 +186,7 @@ jobs:
   build:
     name: Build
     needs: [validate, check_alive_and_permissions, check_latest_from_upstream]
-    runs-on: macos-14
+    runs-on: [ self-hosted, macos-14 ]
     permissions:
       contents: write
     if:
@@ -306,6 +306,9 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          LANGUAGE: en_US.UTF-8
 
       # Upload to TestFlight
       - name: Fastlane upload to TestFlight
@@ -317,6 +320,9 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          LANGUAGE: en_US.UTF-8
 
       # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
